@@ -24,12 +24,5 @@ stage ('Runing Container to test built Docker Image'){
     powershell "docker run -dit --name ${container} -p 9091:9090 ${imagename}"
     }
    
-   stage('Docker Login and Push Image'){
-    withCredentials([usernamePassword(credentialsId: 'docker-hub-credentials', passwordVariable: 'dockerpasswd', usernameVariable: 'dockeruser')]) {
-    powershell "docker login -u ${dockeruser} -p ${dockerpasswd}"
-    }
-    powershell "docker push ${dockeruser}/openjdk:7"
-    }
-
-}
+   
 }
