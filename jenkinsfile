@@ -1,5 +1,5 @@
 def dockeruser = "blaso"
-def imagename = "openjdk:latest"
+def imagename = "openjdk:8"
 def container = "helloworld"
 node {
    echo 'Building Apache Docker Image'
