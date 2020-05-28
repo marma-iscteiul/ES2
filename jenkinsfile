@@ -1,3 +1,4 @@
+
 def dockeruser = "blaso"
 def imagename = "openjdk:8"
 def container = "helloworld"
@@ -8,7 +9,7 @@ stage('Git Checkout') {
     git 'https://github.com/marma-iscteiul/ES2.git'
     }
     
-stage('Build Docker Images'){
+stage('Build Docker Imagae'){
      powershell "docker build -t  ${imagename} ."
     }
     
@@ -18,11 +19,9 @@ stage('Stop Existing Container'){
     
 stage('Remove Existing Container'){
      powershell "docker rm ${container}"
-    }
-    
-    stage ('Runing Container to test built Docker Image'){
-    powershell "docker run -dit --name ${container} -p 9091:9090 ${imagename}"
-    }
+    } 
            
-
+stage ('Runing Container to test built Docker Image'){
+    powershell "docker run -dit --name ${container} -p 8091:8080 ${imagename}"
+    }
 }
