@@ -5,10 +5,10 @@ node {
    echo 'Building Apache Docker Image'
 
 stage('Git Checkout') {
-    git 'https://github.com/jvpreis/ESII'
+    git 'https://github.com/marma-iscteiul/ES2.git'
     }
     
-stage('Build Docker Imagae'){
+stage('Build Docker Images'){
      powershell "docker build -t  ${imagename} ."
     }
     
@@ -19,20 +19,15 @@ stage('Stop Existing Container'){
 stage('Remove Existing Container'){
      powershell "docker rm ${container}"
     }
-    
+           
 stage ('Runing Container to test built Docker Image'){
-    powershell "docker run -dit --name ${container} -p 80:80 ${imagename}"
+    powershell "docker run -dit --name ${container} -p 8091:8080 ${imagename}"
     }
     
-stage('Tag Docker Image'){
-    powershell "docker tag ${imagename} ${env.dockeruser}/openjdk:7"
-    }
-
-stage('Docker Login and Push Image'){
+    stage('Docker Login and Push Image'){
     withCredentials([usernamePassword(credentialsId: 'docker-hub-credentials', passwordVariable: 'dockerpasswd', usernameVariable: 'dockeruser')]) {
     powershell "docker login -u ${dockeruser} -p ${dockerpasswd}"
     }
     powershell "docker push ${dockeruser}/openjdk:7"
     }
-
 }
