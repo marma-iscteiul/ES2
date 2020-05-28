@@ -1,5 +1,5 @@
 def dockeruser = "blaso"
-def imagename = "openjdk:7"
+def imagename = "openjdk:latest"
 def container = "helloworld"
 node {
    echo 'Building Apache Docker Image'
@@ -27,7 +27,7 @@ stage ('Runing Container to test built Docker Image'){
     withCredentials([usernamePassword(credentialsId: 'docker-hub-credentials', passwordVariable: 'dockerpasswd', usernameVariable: 'dockeruser')]) {
     powershell "docker login -u ${dockeruser} -p ${dockerpasswd}"
     }
-    powershell "docker push ${dockeruser}/ubuntu:openjdk:7"
+    powershell "docker push ${dockeruser}/ubuntu:openjdk:latest"
     }
    
 }
