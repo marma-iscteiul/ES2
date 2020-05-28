@@ -21,8 +21,13 @@ stage('Remove Existing Container'){
     }
            
 stage ('Runing Container to test built Docker Image'){
-    powershell "docker run -dit --name ${container} -p 9091:9090 ${imagename}"
+    powershell "docker run -dit --name ${container} -p 90:90 ${imagename}"
     }
-   
+   stage('Docker Login and Push Image'){
+    withCredentials([usernamePassword(credentialsId: 'docker-hub-credentials', passwordVariable: 'dockerpasswd', usernameVariable: 'dockeruser')]) {
+    powershell "docker login -u ${dockeruser} -p ${dockerpasswd}"
+    }
+    powershell "docker push ${dockeruser}/ubuntu:openjdk:7"
+    }
    
 }
